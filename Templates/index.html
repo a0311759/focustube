@@ -2,25 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Videos</title>
+    <title>YouTube Video Viewer</title>
+
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default margin */
+        }
+
+        #sidebar {
+            width: 25%; /* Adjusted to 25% of the screen width */
+            padding: 20px;
+            background-color: #f1f1f1;
+        }
+
+        #content {
+            width: 75%; /* Adjusted to 75% of the screen width */
+            padding: 20px;
+        }
+
+        .video-container {
+            display: inline-block;
+            margin: 10px;
+            max-width: 100%; /* Set maximum width for responsiveness */
+            box-sizing: border-box; /* Include padding and border in total width */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd; /* Add a border to images for better visibility */
+            border-radius: 4px; /* Optional: Add some border-radius for aesthetics */
+        }
+
+        p {
+            font-size: 14px; /* Adjust font size as needed */
+            margin: 5px 0; /* Add some margin for better spacing */
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 8px;
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Adjust styles for smaller screens, e.g., smartphones */
+            body {
+                flex-direction: column; /* Stack elements vertically */
+            }
+
+            #sidebar, #content {
+                width: 100%; /* Take full width on smaller screens */
+            }
+
+            .video-container {
+                width: 100%; /* Adjust width for full width on smaller screens */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Latest YouTube Videos</h1>
+    <div id="sidebar">
+        <h1>YouTube Videos</h1>
 
-    <!-- Add a search form -->
-    <form action="{{ url_for('index') }}" method="get">
-        <label for="search_query">Search videos:</label>
-        <input type="text" id="search_query" name="q" placeholder="Enter search query" value="{{ search_query }}">
-        <button type="submit">Search</button>
-    </form>
+        <form action="{{ url_for('index') }}" method="get">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
 
-    {% for video in videos %}
+        {% if search_query %}
+            <p>Search results for: {{ search_query }}</p>
+        {% endif %}
+
         <div>
-            <img src="{{ video.thumbnail }}" alt="{{ video.title }}">
-            <h3>{{ video.title }}</h3>
-            <a href="{{ url_for('watch', video_id=video.id) }}" target="_blank">Watch Video</a>
+            {% for video in videos %}
+                <div class="video-container">
+                    <a href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank">
+                        <img src="{{ video.thumbnail }}" alt="{{ video.title }}">
+                    </a>
+                    <p>{{ video.title }} - Topic: {{ video.topic }}</p>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 </body>
 </html>
