@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Viewer</title>
+    <title>Stream Videos</title>
 
     <style>
         body {
@@ -17,6 +17,7 @@
             width: 25%; /* Adjusted to 25% of the screen width */
             padding: 20px;
             background-color: #f1f1f1;
+            margin: 0 auto; /* Center the sidebar */
         }
 
         #content {
@@ -72,7 +73,7 @@
 </head>
 <body>
     <div id="sidebar">
-        <h1>YouTube Videos</h1>
+        <h1></h1>
 
         <form action="{{ url_for('index') }}" method="get">
             <input type="text" name="q" placeholder="Search...">
@@ -96,3 +97,6 @@
     </div>
 </body>
 </html>
+
+
+
